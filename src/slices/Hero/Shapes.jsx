@@ -30,48 +30,49 @@ function Geometries(){
             position: [0,0.5,-1],
             r:0.5,
             geometry: new THREE.TorusKnotGeometry( 2.5, 0.7, 161, 16 ),
-            material: new THREE.MeshStandardMaterial({ color: 0xffff00, metalness: 0.7, roughness: 0.5 }),  // Yellow material for TorusKnot
+ // Yellow material for TorusKnot
         },
         {
             position: [1.2,-0.95,5],
             r:0.3,
             geometry: new THREE.OctahedronGeometry(1),
-            material: new THREE.MeshStandardMaterial({ color: 0xc0c0c0, metalness: 0.9, roughness: 0.4 }),  // Silver metallic material for Octahedron
+  // Silver metallic material for Octahedron
         },
     ];
 
     const materials = [
+        new THREE.MeshNormalMaterial(),
         new THREE.MeshStandardMaterial({ color: 0xffff00, metalness: 0.7, roughness: 0.5 }),
         new THREE.MeshStandardMaterial({ color: 0xc0c0c0, metalness: 0.8, roughness: 0.5 }),
     ];
 
-    function getRandomMaterial(){
-        return gsap.utils.random(materials);
-    }
+
     const soundeffects=[
         new Audio("/sounds/impactMetal_002.ogg"),
         new Audio("/sounds/impactMetal_003.ogg")
     ]
 
-    return geometries.map(({position, r, geometry, material})=>(
+    return geometries.map(({position, r, geometry})=>(
         <Geometry
             key={JSON.stringify(position)}
             position={position.map((p)=>p*2)}
             geometry={geometry}
             soundeffects={soundeffects}
-            material={material}
-            r={r}
-            getRandomMaterial={getRandomMaterial} />
+            material={materials}
+            r={r} />
     ));
 }
 
 
 
-function Geometry({r, position, geometry, material, getRandomMaterial, soundeffects}){
+function Geometry({r, position, geometry, materials, soundeffects}){
     const  meshRef= useRef();
-    const [visible, setVisible]=useState(true);
-    const startingMaterial = material || getRandomMaterial();
+    const [visible, setVisible]=useState(false);
+    const startingMaterial = materials;
 
+    function getRandomMaterial(){
+        return gsap.utils.random(materials);
+    }
     function handleClick(e){
         const mesh = e.object;
 
