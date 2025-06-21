@@ -29,7 +29,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="bg-gradient-to-br from-black via-gray-900 to-black min-h-screen  text-slate-200">
+    <html lang="en" className="bg-gradient-to-br from-black via-gray-900 to-black min-h-screen text-slate-200">
       <body className={clsx(inter.className, "relative min-h-screen")}>
         <Header/>
         {children}
